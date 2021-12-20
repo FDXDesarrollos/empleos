@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="layout/header :: encabezado-pagina"></div>
+	<div th:replace="layout/recursos-css :: css-externos"></div>
+	<!-- Custom styles for this template -->
+	<link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+	<style>
+		.jumbotron {
+		    margin-bottom: 0px;
+		    background-image: url(/img/oficina.jpg);
+		    background-position: 0% 25%;
+		    background-size: cover;
+		    background-repeat: no-repeat;
+		    color: black;
+		    /*text-shadow: black 0.3em 0.3em 0.3em;*/
+		}
+	</style>
+</head>
+
+<body style="margin-bottom: 0px;">
+	<header th:insert="layout/navbar :: menu-principal"></header>
+	<br><br>
+	
+	<main role="main">
+		<!-- Main jumbotron for a primary marketing message or call to action -->
+		<div class="jumbotron">
+			<div class="container" style="background-color: #c7e1e5; opacity: 0.7; width:750px">
+				<h3>Buscar Ofertas de Empleo</h3> 
+				<!--  Puedes buscar por descripción y categoría -->
+				<form class="form-inline" th:action="@{/search}" method="get" th:object="${busqueda}">
+					<input type="text" th:field="*{descripcion}" class="form-control mb-3" style="width: 350px;" id="exampleFormControlInput1" placeholder="Escriba cargo o área profesional">&nbsp;
+                    <select th:field="*{categoria.id}" class="custom-select custom-select mb-3"  name="categoria">
+                      <option value="">Seleccione una categoría</option>
+                      <option th:each="categoria : ${categorias}" 
+                              th:value="${categoria.id}"
+                              th:text="${categoria.nombre}"></option>
+                    </select>&nbsp;&nbsp;
+					<button type="submit" class="btn btn-primary mb-3">Buscar</button>
+				</form>
+			</div>
+		</div>
+		
+		<div class="container">
+			<hr>
+			<h2 class="font-weight-bold text-center text-capitalize">DESTACADOS</h2>
+			<hr>
+			<div class="row" th:each="vacante : ${vacantes}">
+				<div class="col-md-3">
+					<img class="rounded mx-auto d-block" th:src="@{/doc/logos/{img} (img=${vacante.imagen})}" alt="Generic placeholder image" width="220" height="220">
+				</div>
+				<div class="col-md-9">
+					<h2 th:text="${vacante.nombre}"></h2>
+					<h6 class="card-title"><strong>Categoría: </strong><span th:text="${vacante.categoria.nombre}"></span></h6>
+					<h6 class="card-title"><strong>Publicado: </strong><span th:text="${#dates.format(vacante.fecha,'dd/MM/yyyy')}"></span></h6>
+					<p th:text="${vacante.descripcion}"></p>
+					<p>
+						<a class="btn btn-secondary" th:href="@{/vacantes/view/{id} (id=${vacante.id})}" role="button">Detalles &raquo;</a>
+					</p>
+				</div>
+			</div>
+			<hr>
+		</div>
+	</main>
+
+	<br>
+	
+	<footer th:replace="layout/footer :: pie-pagina" class="py-4 bg-dark"></footer>
+	<!-- <footer th:insert="layout/footer :: pie-pagina" class="py-4 bg-dark"></footer> -->
+	
+	<div th:replace="layout/recursos-js :: js-externos"></div>
+</body>
+</html>
+	

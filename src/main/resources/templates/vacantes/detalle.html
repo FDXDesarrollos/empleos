@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="layout/header :: encabezado-pagina"></div>
+	<div th:replace="layout/recursos-css :: css-externos"></div>
+</head>
+
+<body style="margin-bottom: 0px;">
+	<header th:insert="layout/navbar :: menu-principal"></header>
+	<br><br><br><br>
+	
+	<main role="main">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<img class="rounded mx-auto d-block" th:src="@{/doc/logos/{img} (img=${vacante.imagen})}" alt="Generic placeholder image" width="220" height="220">
+				</div>
+				<div class="col-md-9">
+					<div class="card">
+						<h4 class="card-header">Postular para <strong th:text="${vacante.nombre}"></strong></h4>
+						<div class="card-body">
+							<h5 class="card-title"><strong>Categoría: </strong><span th:text="${vacante.categoria.nombre}"></span></h5>
+							<h6 class="card-title"><strong>Publicado: </strong><span th:text="${#dates.format(vacante.fecha,'dd/MM/yyyy')}"></span></h6>
+							<h6 class="card-title"><strong>Salario Ofrecido: </strong><span th:text="${vacante.salario}"></span></h6>
+							<p class="card-text" th:text="${vacante.descripcion}"></p>
+
+							<div class="card bg-light mb-3">
+								<div class="card-body">
+									<h5 class="card-title">Detalles de la oferta de trabajo</h5>
+									<p class="card-text" th:utext="${vacante.detalles}"></p>
+								</div>
+							</div>
+							
+							<div sec:authorize="isAnonymous()">
+								<a class="btn btn-info" href="#" role="button" title="Quiero postularme para esta oferta de trabajo.">
+									<i class="fas fa-file" aria-hidden="true"></i>
+									Regístrese para postular en esta Vacante
+								</a>								
+							</div>
+							
+							<div sec:authorize="isAuthenticated()">
+								<a class="btn btn-success" th:href="@{/solicitudes/create/{id} (id=${vacante.id})}" role="button" title="Quiero postularme para esta oferta de trabajo.">
+									<i class="fas fa-file" aria-hidden="true"></i>Postularme
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	
+	<br>
+	
+	<!-- Footer -->
+	<footer th:replace="layout/footer :: pie-pagina" class="py-4 bg-dark"></footer>
+	<div th:replace="layout/recursos-js :: js-externos"></div>
+</body>
+</html>
+

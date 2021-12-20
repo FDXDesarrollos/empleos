@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="layout/header :: encabezado-pagina"></div>
+	<div th:replace="layout/recursos-css :: css-externos"></div>
+</head>
+
+<body style="margin-bottom: 0px;">
+    <main role="main">     
+      <div class="container"> 
+          <div class="card-body">
+            <form th:action="@{/login}" method="post" class="form-signin">
+              <div class="row">
+                <div class="col-md-4"></div>  
+                <div class="col-md-4"> 
+                  <img class="mb-4 rounded mx-auto d-block" th:src="@{/img/lock.png}" alt="" width="128" height="128">
+	              <div class="text-center" th:if="${param.error}">
+					<span class="text-danger font-weight-bold">Usuario / Password incorrectos!</span>
+				  </div>
+				  <br>
+                  <!-- <h4 class="h3 mb-3 font-weight-normal text-center">Ingresar</h4> -->
+                  <label for="username" class="sr-only">Username</label>
+                  <input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus><br>
+                  <label for="password" class="sr-only">Password</label>
+                  <input type="password" name="password" id="password" class="form-control" placeholder="Password" required><br>
+                  <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+                  <p class="text-center font-weight-bold" style="font-size:medium">
+                    <br>
+                  	<a class="text-success" th:href="@{/signup}">¿Aun no estas registrado?</a>
+                  </p>
+                </div>
+                <div class="col-md-4"> 
+                </div>
+              </div>   
+            </form>
+          </div>
+      </div>
+    </main>
+	
+	<!-- Footer -->
+	<br>
+	<footer th:replace="layout/footer :: pie-pagina" class="py-4 bg-dark"></footer>
+	<div th:replace="layout/recursos-js :: js-externos"></div>
+</body>
+</html>

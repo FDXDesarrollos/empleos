@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="layout/header :: encabezado-pagina"></div>
+	<div th:replace="layout/recursos-css :: css-externos"></div>
+</head>
+
+<body style="margin-bottom: 0px;">
+	<header th:insert="layout/navbar :: menu-principal"></header>
+	<br><br><br><br>
+
+    <main role="main">     
+      <hr>
+      <div class="container"> 
+        <div class="row">        
+          <div class="col-md-3">
+            <img class="rounded mx-auto d-block" th:src="@{/doc/logos/{img} (img=${vacante.imagen})}" alt="Generic placeholder image" width="220" height="220">            
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <h4 class="card-header">Postular para <strong th:text="${vacante.nombre}"></strong></h4>          
+              <div class="card-body">
+              
+              	<div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+              	<div th:if="${msgfail != null}" class='alert alert-danger' th:text="${msgfail}" role='alert'></div>
+              	
+                <h5 class="card-title"><strong>Categoría: </strong><span th:text="${vacante.categoria.nombre}"></span></h5>
+                <h6 class="card-title"><strong>Publicado: </strong><span th:text="${#dates.format(vacante.fecha,'dd/MM/yyyy')}"></span></h6>
+                <h6 class="card-title"><strong>Salario Ofrecido: </strong>$<span th:text="${#numbers.formatDecimal(vacante.salario, 1, 'COMMA', 2, 'POINT')}"></span></h6>
+                <p class="card-text" th:text="${vacante.descripcion}"></p>
+                <hr>
+                <form id="form1" name="form1" th:action="@{/solicitudes/save}" method="post" th:object="${solicitud}" enctype="multipart/form-data">                                           
+                  <div class="row">
+                    <div class="col-md-6"> 
+                      <div class="form-group">
+                        <label for="comentarios">Comentarios</label>
+                        <textarea class="form-control" name="comentarios" id="comentarios" rows="2" onchange="this.value=this.value.toUpperCase();"></textarea>
+                        <input type="hidden" th:name="vacante.id" th:value="${vacante.id}">
+                      </div> 
+                    </div> 
+                    <div class="col-md-6"> 
+                      <div class="form-group">
+                        <label for="archivoCV">Curriculm Vitae</label>
+                        <input type="file" class="form-control-file" name="archivoCV" id="archivoCV" required="true">
+                        <p class="help-block">Archivos [ pdf,doc,docx ]</p>
+                      </div>
+                    </div>
+                  </div> 
+                  <hr>
+                  <button type="submit" title="Enviar mi Solicitud." class="btn btn-primary">Enviar</button>  
+                </form>
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+    </main>
+	
+	<!-- Footer -->
+	<br>
+	<footer th:replace="layout/footer :: pie-pagina" class="py-4 bg-dark"></footer>
+	<div th:replace="layout/recursos-js :: js-externos"></div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<nav th:fragment="menu-principal" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top" style="height: 120px;">
+	<div class="container">
+		<a class="navbar-brand" th:href="@{/}">
+	        <div class="row">
+	          <div class="col-md-3">            
+	            <img class="rounded mx-auto d-block" th:src="@{/img/logo-sts.png}" alt="" width="80" height="80">            
+	          </div>
+	          <div class="col-md-9">
+					<h2 style="color:#fff;">Spring Jobs</h2>
+					<p>Encuentra tú siguiente empleo</p>         
+	          </div>
+	        </div> 
+		</a>
+		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item" sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRADOR')">
+					<a class="nav-link" th:href="@{/vacantes/indexPaginate}">Vacantes</a>
+				</li>
+				<li class="nav-item" sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRADOR')">
+					<a class="nav-link" th:href="@{/categorias/indexPaginate}">Categorias</a>
+				</li>
+				<li class="nav-item" sec:authorize="hasAnyAuthority('SUPERVISOR','ADMINISTRADOR')">
+					<a class="nav-link" th:href="@{/solicitudes/index}">Solicitudes</a>
+				</li>				
+				<li class="nav-item" sec:authorize="hasAnyAuthority('ADMINISTRADOR')">
+					<a class="nav-link" th:href="@{/usuarios/index}">Usuarios</a>
+				</li>
+						
+				<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+				  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fa fa-user"></i>
+				    <span th:if="${session.usuario != null}" class="text-light" th:text="${session.usuario.nombre}"></span>
+				  </a>
+				  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				    <a class="dropdown-item" th:href="@{/logout}">Cerrar Sesión</a>
+				  </div>
+				</li>					
+				
+				<li class="nav-item dropdown" sec:authorize="isAnonymous()">
+				  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    Ingresar
+				  </a>
+				  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				    <a class="dropdown-item" th:href="@{/signup}">Crear cuenta</a>
+				    <a class="dropdown-item" th:href="@{/index}">Iniciar Sesión</a>
+				    <!--<a class="dropdown-item" th:href="@{/acceso}">Iniciar Sesión</a>-->
+				    <!-- <div class="dropdown-divider"></div>
+				    <a class="dropdown-item" href="#">Something else here</a> -->
+				  </div>
+				</li>					
+			</ul>
+		</div>
+	</div>
+</nav>

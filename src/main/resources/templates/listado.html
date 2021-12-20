@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	  <meta charset="utf-8">
+	  <title>Listado de Vacantes</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  <link rel="shortcut icon" href="/favicon.ico" />
+	  <link rel="stylesheet" href="estilos.css">
+	</head>
+	
+	<body>		
+		<h1>Bienvenid@</h1>
+		<h2>Vacantes disponibles</h2>
+		<ol>
+			<li th:each="item:${empleos}" th:text="${item}"></li>
+		</ol>
+	</body>
+</html>
+
+
+
+
